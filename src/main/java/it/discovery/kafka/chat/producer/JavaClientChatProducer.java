@@ -1,5 +1,6 @@
 package it.discovery.kafka.chat.producer;
 
+import it.discovery.kafka.chat.config.CustomPartitioner;
 import it.discovery.kafka.chat.model.Chat;
 import it.discovery.kafka.chat.model.ChatMessage;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -21,6 +22,8 @@ public class JavaClientChatProducer implements ChatProducer{
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, CustomPartitioner.class.getName());
+
 
     }
     @Override
@@ -34,7 +37,7 @@ public class JavaClientChatProducer implements ChatProducer{
     }
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
-        Chat chat = new Chat("kafka-training");
+        Chat chat = new Chat("chat_messages");
         ChatMessage message = new ChatMessage("Peter", "Hello from Peter!", chat);
         ChatProducer producer = new JavaClientChatProducer("localhost:9092");
         for(int i = 0; i < 10; i ++) {
