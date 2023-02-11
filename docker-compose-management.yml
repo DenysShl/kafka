@@ -23,11 +23,17 @@ services:
     image: confluentinc/cp-kafka-rest:7.3.1
     depends_on:
       - kafka
-      - schema-registry
     ports:
       - 8082:8082
     environment:
       KAFKA_REST_HOST_NAME: rest-proxy
       KAFKA_REST_BOOTSTRAP_SERVERS: 'kafka:29092'
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
+  console:
+    image: docker.redpanda.com/vectorized/console
+    environment:
+      KAFKA_BROKERS: kafka:29092
+    ports:
+      - 8080:8080
+
 
