@@ -13,7 +13,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-public class JavaClientChatProducer implements ChatProducer{
+public class JavaClientChatProducer implements ChatProducer {
 
     private final Properties properties;
 
@@ -23,13 +23,12 @@ public class JavaClientChatProducer implements ChatProducer{
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, CustomPartitioner.class.getName());
-
-
     }
+
     @Override
     public Future<RecordMetadata> send(ChatMessage message) {
         //Make it Singleton
-        try(KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties)) {
+        try (KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties)) {
             ProducerRecord<String, String> record = new ProducerRecord<>(message.chat().name(),
                     message.sender(), message.text());
             return producer.send(record);
@@ -39,7 +38,7 @@ public class JavaClientChatProducer implements ChatProducer{
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         Chat chat = new Chat("chat_messages");
         ChatProducer producer = new JavaClientChatProducer("localhost:9092");
-        for(int i = 0; i < 10; i ++) {
+        for (int i = 0; i < 10; i++) {
             ChatMessage message = new ChatMessage("Peter_" + i, "Hello from Peter!", chat);
 
             Future<RecordMetadata> future = producer.send(message);
@@ -47,7 +46,7 @@ public class JavaClientChatProducer implements ChatProducer{
             System.out.println("Message offset: " + recordMetadata.offset());
             System.out.println("Message timestamp: " + recordMetadata.timestamp());
             System.out.println("Message partition: " + recordMetadata.partition());
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         }
     }
 }
