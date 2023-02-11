@@ -38,13 +38,15 @@ public class JavaClientChatProducer implements ChatProducer{
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         Chat chat = new Chat("chat_messages");
-        ChatMessage message = new ChatMessage("Peter", "Hello from Peter!", chat);
         ChatProducer producer = new JavaClientChatProducer("localhost:9092");
         for(int i = 0; i < 10; i ++) {
+            ChatMessage message = new ChatMessage("Peter_" + i, "Hello from Peter!", chat);
+
             Future<RecordMetadata> future = producer.send(message);
             RecordMetadata recordMetadata = future.get();
             System.out.println("Message offset: " + recordMetadata.offset());
             System.out.println("Message timestamp: " + recordMetadata.timestamp());
+            System.out.println("Message partition: " + recordMetadata.partition());
             Thread.sleep(1000);
         }
     }
