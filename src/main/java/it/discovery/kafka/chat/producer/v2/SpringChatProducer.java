@@ -22,6 +22,7 @@ public class SpringChatProducer implements ChatProducer<SendResult<String, ChatM
     private final Environment env;
 
     @Override
+    @Transactional
     public Future<SendResult<String, ChatMessageVO>> send(ChatMessage message) {
         ProducerRecord<String, ChatMessageVO> record = new ProducerRecord<>(env.getRequiredProperty("topic.messages"),
                 message.sender(), new ChatMessageVO(message.text(), message.chat(), message.messageType()));

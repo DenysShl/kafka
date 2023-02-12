@@ -9,16 +9,19 @@ spring:
       bootstrap-servers:
         - localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer
       transaction-id-prefix: spring-agent
+      properties:
+        schema.registry.url: http://localhost:8081
     consumer:
       bootstrap-servers:
         - localhost:9092
       group-id: spring-client
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializer
       properties:
         spring.json.trusted.packages: "*"
         isolation.level: read_committed
+        schema.registry.url: http://localhost:8081
 
