@@ -1,5 +1,7 @@
 chat:
   name: chat_messages
+server:
+  port: 9000
 spring:
   kafka:
     producer:
