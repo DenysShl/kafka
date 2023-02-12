@@ -1,5 +1,5 @@
 chat:
-  name: chat_messages
+  name: chat_messages.v2
 server:
   port: 9000
 spring:
@@ -8,12 +8,14 @@ spring:
       bootstrap-servers:
         - localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       bootstrap-servers:
         - localhost:9092
       group-id: spring-client
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
 
