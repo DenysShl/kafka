@@ -13,7 +13,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-public class JavaClientChatProducer implements ChatProducer {
+public class JavaClientChatProducer implements ChatProducer<RecordMetadata> {
 
     private final Properties properties;
 
