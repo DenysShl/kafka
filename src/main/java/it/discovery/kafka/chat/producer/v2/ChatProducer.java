@@ -7,4 +7,6 @@ public interface ChatProducer<T> {
     Future<T> send(ChatMessage message);
 
     Future<T> like(MessageId id);
+
+    Future<T> createChat(String name);
 }

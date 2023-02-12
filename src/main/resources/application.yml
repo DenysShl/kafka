@@ -1,5 +1,6 @@
-chat:
-  name: chat_messages.v2
+topic:
+  messages: chat_messages.v2
+  chats: chats.v2
 server:
   port: 9000
 spring:
@@ -9,6 +10,7 @@ spring:
         - localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      transaction-id-prefix: spring-agent
     consumer:
       bootstrap-servers:
         - localhost:9092
@@ -18,4 +20,5 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
+        isolation.level: read_committed
 

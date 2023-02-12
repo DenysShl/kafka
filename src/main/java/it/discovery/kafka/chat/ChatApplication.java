@@ -3,6 +3,7 @@ package it.discovery.kafka.chat;
 import it.discovery.kafka.chat.model.ChatMessageVO;
 import it.discovery.kafka.chat.producer.v2.ChatProducer;
 import it.discovery.kafka.chat.producer.v2.SpringChatProducer;
+import it.discovery.kafka.chat.producer.v2.event.ChatCreatedEvent;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,8 @@ public class ChatApplication {
 
     @Bean
     ChatProducer chatProducer(KafkaTemplate<String, ChatMessageVO> kafkaTemplate,
+                              KafkaTemplate<String, ChatCreatedEvent> chatTemplate,
                               Environment env) {
-        return new SpringChatProducer(kafkaTemplate, env);
+        return new SpringChatProducer(kafkaTemplate, chatTemplate, env);
     }
 }

@@ -17,7 +17,7 @@ import org.springframework.kafka.listener.DefaultErrorHandler;
 @Slf4j
 public class SpringConsumerConfig {
 
-    @KafkaListener(groupId = "spring-client", topics = "${chat.name}")
+    @KafkaListener(groupId = "spring-client", topics = "${topic.messages}")
     public void readChatMessages(ConsumerRecord<String, ChatMessageVO> record) {
         log.info("New message {} with type {} in the chat {} from {}", record.value().text(),
                 record.value().messageType(), record.value().chat(), record.key());
